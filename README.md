@@ -1,6 +1,6 @@
-# Analisis-y-diseno-de-algoritmos
+# Equipo FLDSMDFR
 Equipo compuesto por:
   -Juan José Severino
   -Manuel Gúzman
-  -Mariel
-  -Alejandro
+  -Mariel Reyna
+  -Alejandro Cordoba
