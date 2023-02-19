@@ -1,4 +1,4 @@
-# Equipo FLDSMDFR
+# Equipo Houdini
 Equipo compuesto por:
   -Juan José Severino
   -Manuel Gúzman
