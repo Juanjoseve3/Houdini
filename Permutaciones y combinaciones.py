@@ -14,9 +14,9 @@ def factorial_de_un_numero(numero):
     numero_inicial *= numero
   return numero_inicial
 
-#hay que empezar a jugar con estas pregunta para los condicionales
 print('BIENVENIDOS A PERMUTACIONES Y COMBINACIONES RECUERDA LAS ESTRUCTURAS DE LA AMBAS Y SUS CASOS ESPECÍFICOS, Y ANALIZA EL PROBLEMA')
 quiere = str(input("Quieres Continuar? si/no: "))
+lista_de_resultados = []
 if quiere == 'no':
   print('GRACIAS POR INTENTARLO:)')
 else:
@@ -35,11 +35,18 @@ class Combinaciones_Permutaciones:
     self.m = numero_de_elementos  
     self.n = elementos_a_agrupar # cuando llamemos la clase ahi vamos a poner los datos
     self.p = palabra
+  
+  def reiniciar_valores(self,numero_de_elementos, elementos_a_agrupar):
+    self.numero_de_elementos = 0
+    self.elementos_a_agrupar = 0
+    
 
   def combinaciones_ordinarias(self):
     m = self.m
     n = self.n
     resta_de_la_operacion = m-n #se tiene que hacer este tipo de operaciones por parte para que no lanze un error 
+    if resta_de_la_operacion == 0:
+      resta_de_la_operacion = 1
     m = factorial_de_un_numero(m) 
     n = factorial_de_un_numero(n)
     resultado_resta = factorial_de_un_numero(resta_de_la_operacion) #el resultado de mi resta lo factorizo
@@ -116,15 +123,45 @@ class Combinaciones_Permutaciones:
       if(primera_pregunta == "no" and segunda_pregunta == "no" and tercera_pregunta == "si"):
         return self.combinaciones_con_repeticion()  
 
-
 if(primera_pregunta == "si" and segunda_pregunta == "si" and tercera_pregunta == "si"):
-  p = Combinaciones_Permutaciones(palabra,numero_de_elementos=0,elementos_a_agrupar=0)
+  instancia = Combinaciones_Permutaciones(palabra,numero_de_elementos=0,elementos_a_agrupar=0)
 else:
   palabra = None
-  p = Combinaciones_Permutaciones(palabra, numero_de_elementos, elementos_a_agrupar)
+  instancia = Combinaciones_Permutaciones(palabra, numero_de_elementos, elementos_a_agrupar)
 
-if quiere != 'no': 
- print('TU RESULTADO ES:', p.devolver_valor_de_operacion())
+if quiere != 'no':
+ valor_de_la_operacion = instancia.devolver_valor_de_operacion()
+ lista_de_resultados.append(valor_de_la_operacion)
+ print('TU RESULTADO ES:', lista_de_resultados)
+    
+
+while True:
+  quiere = input("¿Quieres continuar? si/no: ")
+  if quiere == 'no':
+    multiplicidad_aditivo_ninguno = input("¿Desea hacer el proceso aditivo, multiplicativo o ninguno? aditivo/multiplicativo/ninguno: ")
+    if multiplicidad_aditivo_ninguno == "aditivo":
+      elementos_aditivos = sum(lista_de_resultados)
+      print("TU RESULTADO ES: ",elementos_aditivos)
+      break  # Salir del bucle
+    elif multiplicidad_aditivo_ninguno == "multiplicativo":
+      elementos_multiplicativos = 1
+      for elementos in lista_de_resultados:
+        elementos_multiplicativos *= elementos
+      print("TU RESULTADO ES: ",elementos_multiplicativos)
+      break  # Salir del bucle
+    elif multiplicidad_aditivo_ninguno == "ninguno" or multiplicidad_aditivo_ninguno == "":
+      break # Salir del bucle
+  elif quiere != 'si':
+    print('Respuesta no válida, intenta de nuevo')
+    continue  # Volver a preguntanr
+
+  primera_pregunta = input("¿Importa el orden? si/no: ")
+  segunda_pregunta = input("¿Intervienen todos los elementos? si/no: ")
+  tercera_pregunta = input("¿Se repiten los elementos? si/no: ")
+
+  resultado = instancia.devolver_valor_de_operacion()
+  lista_de_resultados.append(resultado)
+  print("TU RESULTADO ES:",lista_de_resultados)
 
  #Referencias
  #https://programminghistorian.org/es/lecciones/contar-frecuencias
