@@ -21,13 +21,20 @@ if quiere == 'no':
   print('GRACIAS POR INTENTARLO:)')
 else:
   primera_pregunta = str(input("¿Importa el orden? si/no: "))
-  segunda_pregunta = str(input("¿Intervienen todos los elementos? si/no: "))
+  if primera_pregunta == "si":
+    segunda_pregunta = str(input("¿Intervienen todos los elementos? si/no: "))
   tercera_pregunta = str(input("¿Se repiten los elementos? si/no: "))
   if(primera_pregunta == "si" and segunda_pregunta == "si" and tercera_pregunta == "si"):
     palabra = str(input("Ingrese la Palabra o conjunto: "))
   else:
     numero_de_elementos = int(input("ingrese el numero de elementos: "))
+    if numero_de_elementos < 0:
+      print("No se puede ingresar una cantidad negativa")
+      numero_de_elementos = int(input("ingrese el numero de elementos: "))
     elementos_a_agrupar = int(input("ingrese el numero de elementos a agrupar: "))
+    if elementos_a_agrupar < 0:
+      print("No se puede ingresar una cantidad negativa")
+      elementos_a_agrupar = int(input("ingrese el numero de elementos a agrupar: "))
   
 class Combinaciones_Permutaciones:
   
@@ -116,11 +123,11 @@ class Combinaciones_Permutaciones:
 
     #--------------------------------arriba estan las permutaciones------------------------
 
-    elif(primera_pregunta == "no" and segunda_pregunta == "no" and tercera_pregunta == "no"):
+    elif(primera_pregunta == "no" and tercera_pregunta == "no"):
       return self.combinaciones_ordinarias()
 
     else:
-      if(primera_pregunta == "no" and segunda_pregunta == "no" and tercera_pregunta == "si"):
+      if(primera_pregunta == "no" and tercera_pregunta == "si"):
         return self.combinaciones_con_repeticion()  
 
 if(primera_pregunta == "si" and segunda_pregunta == "si" and tercera_pregunta == "si"):
