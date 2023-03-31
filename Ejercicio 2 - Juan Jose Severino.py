@@ -7,20 +7,22 @@ Original file is located at
     https://colab.research.google.com/drive/1UsDRdKWhTpUzYVsSwg5mEMjrWOeJYzzf
 """
 
-g = 1234
-h = []
-while g >= 1:
-  i = g / 10
-  j = g // 10
-  k = (i - j)
-  h.append(round(k*10))
-  g = j
+g = 1234 #O(1)
+h = [] #(1)
+while g >= 1: #O(n)
+  i = g / 10 #O(n)
+  j = g // 10 #O(n)
+  k = (i - j) #O(n)
+  h.append(round(k*10)) #O(n)
+  g = j #O(n)
 
-h.reverse()
+h.reverse() #O(1)
 
-for l in h:
-  m = l * h[1]
-  n = h.pop()
-  o = n * h[-1]
-  p = m * o
-  print(p)
+for l in h: #O(n)
+  m = l * h[1] #O(n)
+  n = h.pop() #O(n)
+  o = n * h[-1] #O(n)
+  p = m * o #O(n)
+  print(p) #O(n)
+
+#suma de big O: 3O(1) + 12O(n) = 12O(n)
