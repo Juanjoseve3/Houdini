@@ -4,3 +4,4 @@ Equipo compuesto por:
   -Manuel Gúzman
   -Mariel Reyna
   -Alejandro Hernández Cardona
+Para el mejor profesor: Juan Camilo David Díaz.
