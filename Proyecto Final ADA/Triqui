@@ -1,1 +1,127 @@
+import math
+import tkinter as tk
+from tkinter import messagebox
 
+# Definir una matriz de 3x3 para representar el tablero de juego
+board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
+
+# Crear una ventana principal
+root = tk.Tk()
+root.title("Tres en Raya")
+
+# Función para reiniciar el juego
+def restart_game():
+    global board
+    board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
+    update_board()
+
+# Función para actualizar el tablero visualmente
+def update_board():
+    for i in range(3):
+        for j in range(3):
+            button = tk.Button(root, text=board[i][j], width=10, height=5, command=lambda row=i, col=j: make_move(row, col))
+            button.grid(row=i, column=j)
+
+# Función para verificar el estado del juego
+def check_win(board, player):
+    # Verificar filas
+    for row in board:
+        if row.count(player) == 3:
+            return True
+    # Verificar columnas
+    for col in range(3):
+        if [board[row][col] for row in range(3)].count(player) == 3:
+            return True
+    # Verificar diagonales
+    if [board[i][i] for i in range(3)].count(player) == 3:
+        return True
+    if [board[i][2-i] for i in range(3)].count(player) == 3:
+        return True
+    return False
+
+# Función para verificar si el juego ha terminado en empate
+def check_draw(board):
+    return all(board[i][j] != ' ' for i in range(3) for j in range(3))
+
+# Función para actualizar el tablero
+def make_move(row, col):
+    if board[row][col] == ' ':
+        board[row][col] = 'X'
+        update_board()
+
+        if check_win(board, 'X'):
+            messagebox.showinfo("Fin del juego", "¡Has ganado!")
+            restart_game()
+        elif check_draw(board):
+            messagebox.showinfo("Fin del juego", "¡Empate!")
+            restart_game()
+        else:
+            machine_move()
+
+# Función para realizar el movimiento de la máquina
+def machine_move():
+    best_score = -math.inf
+    best_move = None
+
+    for row in range(3):
+        for col in range(3):
+            if board[row][col] == ' ':
+                board[row][col] = 'O'
+                score = minimax(board, 0, False)
+                board[row][col] = ' '
+
+                if score > best_score:
+                    best_score = score
+                    best_move = (row, col)
+
+    if best_move is not None:
+        row, col = best_move
+        board[row][col] = 'O'
+        update_board()
+
+        if check_win(board, 'O'):
+            messagebox.showinfo("Fin del juego", "La máquina ha ganado.")
+            restart_game()
+        elif check_draw(board):
+            messagebox.showinfo("Fin del juego", "¡Empate!")
+            restart_game()
+
+# Función que implementa el algoritmo minimax
+def minimax(board, depth, maximizing_player):
+    if check_win(board, 'O'):
+        return 1
+    elif check_win(board, 'X'):
+        return -1
+    elif check_draw(board):
+        return 0
+
+    if maximizing_player:
+        max_eval = -math.inf
+        for row in range(3):
+            for col in range(3):
+                if board[row][col] == ' ':
+                    board[row][col] = 'O'
+                    eval = minimax(board, depth + 1, False)
+                    board[row][col] = ' '
+                    max_eval = max(max_eval, eval)
+        return max_eval
+    else:
+        min_eval = math.inf
+        for row in range(3):
+            for col in range(3):
+                if board[row][col] == ' ':
+                    board[row][col] = 'X'
+                    eval = minimax(board, depth + 1, True)
+                    board[row][col] = ' '
+                    min_eval = min(min_eval, eval)
+        return min_eval
+
+# Iniciar el juego
+update_board()
+
+# Agregar un botón para reiniciar el juego
+restart_button = tk.Button(root, text="Jugar de nuevo", command=restart_game)
+restart_button.grid(row=3, columnspan=3)
+
+# Mostrar la ventana principal
+root.mainloop()
